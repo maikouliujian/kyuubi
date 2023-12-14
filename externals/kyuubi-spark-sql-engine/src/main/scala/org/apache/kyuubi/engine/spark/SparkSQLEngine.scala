@@ -47,9 +47,9 @@ import org.apache.kyuubi.service.Serverable
 import org.apache.kyuubi.session.SessionHandle
 import org.apache.kyuubi.util.{SignalRegister, ThreadUtils}
 import org.apache.kyuubi.util.ThreadUtils.scheduleTolerableRunnableWithFixedDelay
-
+//todo SparkSQLEngine
 case class SparkSQLEngine(spark: SparkSession) extends Serverable("SparkSQLEngine") {
-
+  //todo 创建后端服务
   override val backendService = new SparkSQLBackendService(spark)
   override val frontendServices = Seq(new SparkTBinaryFrontendService(this))
 
@@ -360,6 +360,7 @@ object SparkSQLEngine extends Logging {
         spark = createSpark()
         sparkSessionCreated.set(true)
         try {
+          //todo 启动
           startEngine(spark)
           // blocking main thread
           countDownLatch.await()

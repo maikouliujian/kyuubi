@@ -2024,7 +2024,7 @@ object KyuubiConf {
         "potential network issues.")
       .version("1.5.0")
       .fallbackConf(ENGINE_CONNECTION_URL_USE_HOSTNAME)
-
+  //todo 引擎共享级别
   val ENGINE_SHARE_LEVEL: ConfigEntry[String] = buildConf("kyuubi.engine.share.level")
     .doc("Engines will be shared in different levels, available configs are: <ul>" +
       " <li>CONNECTION: engine will not be shared but only used by the current client" +

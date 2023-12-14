@@ -36,7 +36,7 @@ class SparkSQLBackendService(name: String, spark: SparkSession)
   extends AbstractBackendService(name) {
 
   def this(spark: SparkSession) = this(classOf[SparkSQLBackendService].getSimpleName, spark)
-
+  //todo
   override val sessionManager: SessionManager = new SparkSQLSessionManager(spark)
 
   def sparkSession: SparkSession = spark

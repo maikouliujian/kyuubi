@@ -100,7 +100,7 @@ class SparkSQLSessionManager private (name: String, spark: SparkSession)
     KyuubiPythonGatewayServer.shutdown()
     userIsolatedSparkSessionThread.foreach(_.shutdown())
   }
-
+  //todo 引擎隔离级别逻辑！！！！！！
   private def getOrNewSparkSession(user: String): SparkSession = {
     if (singleSparkSession) {
       spark
@@ -129,6 +129,9 @@ class SparkSQLSessionManager private (name: String, spark: SparkSession)
   }
 
   private def newSparkSession(rootSparkSession: SparkSession): SparkSession = {
+    //todo 新的 SparkSession 实例与原始实例之间共享 SparkContext，这意味着它们可以共享计算资源。但是，它们具有独立的配置，因此可以使用不同的配置选项运行任务。
+    //todo 这种机制对于在同一应用程序中运行不同配置的 Spark 任务很有用。请注意，虽然它们共享 SparkContext，但是由于独立的配置，它们可能具有不同的资源限制、应用程序名称等。
+    //todo 在使用 newSession() 创建新的 SparkSession 实例时，新的实例与原始实例共享相同的 SparkContext，因此它们将具有相同的 Application ID。这意味着它们在 Spark 集群中将被视为同一应用程序。
     val newSparkSession = rootSparkSession.newSession()
     KyuubiSparkUtil.initializeSparkSession(
       newSparkSession,
@@ -146,6 +149,7 @@ class SparkSQLSessionManager private (name: String, spark: SparkSession)
       getSessionOption).getOrElse {
       val sparkSession =
         try {
+          //todo session创建逻辑
           getOrNewSparkSession(user)
         } catch {
           case e: Exception => throw KyuubiSQLException(e)

@@ -109,6 +109,7 @@ class YarnApplicationOperation extends ApplicationOperation with Logging {
       } else {
         try {
           val applicationId = reports.get(0).getApplicationId
+          //todo
           yarnClient.killApplication(applicationId)
           (true, s"Succeeded to terminate: $applicationId with $tag")
         } catch {

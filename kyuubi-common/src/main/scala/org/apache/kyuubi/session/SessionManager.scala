@@ -103,6 +103,7 @@ abstract class SessionManager(name: String) extends CompositeService(name) {
       ipAddress: String,
       conf: Map[String, String]): SessionHandle = {
     info(s"Opening session for $user@$ipAddress")
+    //todo 获取session
     val session = createSession(protocol, user, password, ipAddress, conf)
     try {
       val handle = session.handle
