@@ -32,7 +32,7 @@ import org.apache.kyuubi.engine.spark.session.SparkSessionImpl
 import org.apache.kyuubi.operation.{ArrayFetchIterator, FetchIterator, IterableFetchIterator, OperationHandle, OperationState}
 import org.apache.kyuubi.operation.log.OperationLog
 import org.apache.kyuubi.session.Session
-
+//todo 执行sql
 class ExecuteStatement(
     session: Session,
     override val statement: String,
@@ -83,6 +83,7 @@ class ExecuteStatement(
         info(diagnostics)
         Thread.currentThread().setContextClassLoader(spark.sharedState.jarClassLoader)
         addOperationListener()
+        //todo spark 执行sql，并返回结果！！！！！！
         result = spark.sql(statement)
         iter = collectAsIterator(result)
         setCompiledStateIfNeeded()
@@ -93,13 +94,14 @@ class ExecuteStatement(
     } finally {
       shutdownTimeoutMonitor()
     }
-
+  //todo 执行
   override protected def runInternal(): Unit = {
     addTimeoutMonitor(queryTimeout)
     if (shouldRunAsync) {
       val asyncOperation = new Runnable {
         override def run(): Unit = {
           OperationLog.setCurrentOperationLog(operationLog)
+          //todo 异步执行
           executeStatement()
         }
       }

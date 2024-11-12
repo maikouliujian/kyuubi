@@ -173,6 +173,7 @@ abstract class TFrontendService(name: String)
         Map(
           KYUUBI_SESSION_CONNECTION_URL_KEY -> connectionUrl,
           KYUUBI_SESSION_REAL_USER_KEY -> realUser)
+    //todo
     val sessionHandle = be.openSession(
       protocol,
       sessionUser,

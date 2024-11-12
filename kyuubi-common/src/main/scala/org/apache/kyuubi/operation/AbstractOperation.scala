@@ -164,7 +164,7 @@ abstract class AbstractOperation(session: Session) extends Operation with Loggin
   protected def beforeRun(): Unit
 
   protected def afterRun(): Unit
-
+  //todo 执行逻辑！！！！！！
   override def run(): Unit = {
     beforeRun()
     try {

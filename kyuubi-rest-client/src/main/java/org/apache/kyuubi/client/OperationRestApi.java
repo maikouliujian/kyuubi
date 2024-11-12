@@ -39,7 +39,7 @@ public class OperationRestApi {
     return this.getClient()
         .get(path, new HashMap<>(), KyuubiOperationEvent.class, client.getAuthHeader());
   }
-
+//todo PUT /operations/${operationHandle} operationHandle为cancel or close
   public String applyOperationAction(OpActionRequest request, String operationHandleStr) {
     String path = String.format("%s/%s", API_BASE_PATH, operationHandleStr);
     return this.getClient().put(path, JsonUtils.toJson(request), client.getAuthHeader());

@@ -98,6 +98,7 @@ abstract class AbstractSession(
     try {
       val opHandle = operation.getHandle
       opHandleSet.add(opHandle)
+      //todo operation run
       operation.run()
       opHandle
     } catch {

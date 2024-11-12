@@ -49,8 +49,9 @@ import org.apache.kyuubi.util.{SignalRegister, ThreadUtils}
 import org.apache.kyuubi.util.ThreadUtils.scheduleTolerableRunnableWithFixedDelay
 //todo SparkSQLEngine
 case class SparkSQLEngine(spark: SparkSession) extends Serverable("SparkSQLEngine") {
-  //todo 创建后端服务
+  //todo 创建后端服务【一个】
   override val backendService = new SparkSQLBackendService(spark)
+  //todo 创建前端服务【多个】
   override val frontendServices = Seq(new SparkTBinaryFrontendService(this))
 
   private val shutdown = new AtomicBoolean(false)
@@ -281,7 +282,7 @@ object SparkSQLEngine extends Logging {
     val engineCredentials = kyuubiConf.getOption(KyuubiReservedKeys.KYUUBI_ENGINE_CREDENTIALS_KEY)
     kyuubiConf.unset(KyuubiReservedKeys.KYUUBI_ENGINE_CREDENTIALS_KEY)
     _sparkConf.set(s"spark.${KyuubiReservedKeys.KYUUBI_ENGINE_CREDENTIALS_KEY}", "")
-
+    //todo spark的session
     val session = SparkSession.builder.config(_sparkConf).getOrCreate
 
     engineCredentials.filter(_.nonEmpty).foreach { credentials =>
@@ -309,6 +310,7 @@ object SparkSQLEngine extends Logging {
       }
 
       try {
+        //todo 初始化spark engine
         engine.initialize(kyuubiConf)
         EventBus.post(EngineEvent(engine))
       } catch {
@@ -316,6 +318,7 @@ object SparkSQLEngine extends Logging {
           throw new KyuubiException(s"Failed to initialize SparkSQLEngine: ${t.getMessage}", t)
       }
       try {
+        //todo 启动spark engine
         engine.start()
         val kvStore = SparkContextHelper.getKvStore(spark.sparkContext)
         val store = new EngineEventsStore(kvStore)
@@ -357,10 +360,11 @@ object SparkSQLEngine extends Logging {
       var spark: SparkSession = null
       try {
         startInitTimeoutChecker(submitTime, initTimeout)
+        //todo 创建spark session
         spark = createSpark()
         sparkSessionCreated.set(true)
         try {
-          //todo 启动
+          //todo 启动spark Engine！！！！！！
           startEngine(spark)
           // blocking main thread
           countDownLatch.await()

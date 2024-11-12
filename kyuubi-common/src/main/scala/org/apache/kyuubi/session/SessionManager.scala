@@ -78,7 +78,7 @@ abstract class SessionManager(name: String) extends CompositeService(name) {
   protected def isServer: Boolean
 
   private var execPool: ThreadPoolExecutor = _
-
+  //todo 提交任务
   def submitBackgroundOperation(r: Runnable): Future[_] = execPool.submit(r)
 
   def operationManager: OperationManager
@@ -110,6 +110,7 @@ abstract class SessionManager(name: String) extends CompositeService(name) {
       session.open()
       setSession(handle, session)
       logSessionCountInfo(session, "opened")
+      //todo session handle
       handle
     } catch {
       case e: Exception =>

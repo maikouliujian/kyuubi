@@ -66,6 +66,7 @@ public class JdbcConnectionParams {
   // hive session vars).
   static final String HTTP_PATH_DEPRECATED = "hive.server2.thrift.http.path";
   public static final String HTTP_PATH = "httpPath";
+  //todo kyuubi serviceDiscoveryMode
   public static final String SERVICE_DISCOVERY_MODE = "serviceDiscoveryMode";
   public static final String PROPERTY_DRIVER = "driver";
   public static final String PROPERTY_URL = "url";

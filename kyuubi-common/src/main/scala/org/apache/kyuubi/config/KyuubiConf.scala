@@ -2557,7 +2557,7 @@ object KyuubiConf {
       .version("1.6.1")
       .stringConf
       .createWithDefault("ENGINE")
-
+  //todo 进度条
   val ENGINE_SPARK_SHOW_PROGRESS: ConfigEntry[Boolean] =
     buildConf("kyuubi.session.engine.spark.showProgress")
       .doc("When true, show the progress bar in the Spark's engine log.")

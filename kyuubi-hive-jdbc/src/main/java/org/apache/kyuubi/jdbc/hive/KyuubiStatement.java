@@ -188,7 +188,7 @@ public class KyuubiStatement implements SQLStatement, KyuubiLoggable {
     }
     isClosed = true;
   }
-
+  //todo
   @Override
   public boolean execute(String sql) throws SQLException {
     return executeWithConfOverlay(sql, null);
